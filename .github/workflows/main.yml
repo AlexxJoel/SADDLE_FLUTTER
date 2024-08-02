@@ -7,7 +7,6 @@ on:
 
 jobs:
   build_and_deploy_web:
-    name: Build & Deploy Flutter to Web
     runs-on: ubuntu-latest
 
     permissions:
@@ -16,7 +15,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      
+
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -33,13 +32,13 @@ jobs:
 
       - name: Make copy of artifacts
         run: |
-          chmod u+x "${GITHUB_WORKSPACE}/createandcopytofolder.sh"
-          bash "${GITHUB_WORKSPACE}/createandcopytofolder.sh"
+          chmod u+x "${{ github.workspace }}/createandcopytofolder.sh"
+          bash "${{ github.workspace }}/createandcopytofolder.sh"
 
       - name: Commit artifacts
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: Commit the artifacts
+          commit_message: "Commit the artifacts"
           branch: main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
